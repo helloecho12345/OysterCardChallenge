@@ -21,4 +21,15 @@ describe Oystercard do
     expect{ subject.deduct 3}.to change{ subject.balance }.by -3
     expect(subject).to respond_to(:deduct).with(1).argument
   end
+
+  it "lets the customer in through the barriers" do
+    expect(subject).to respond_to(:touch_in)
+  end
+
+
+  it "lets the customer out through the barriers" do
+    expect(subject).to respond_to(:touch_out)
+  end
+
+  it { is_expected.to respond_to 'in_journey?' }
 end

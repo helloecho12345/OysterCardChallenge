@@ -27,3 +27,11 @@ As a customer
 I need my fare deducted from my card
 # method deduct = balance - fare
 
+User Story #5
+
+In order to get through the barriers.
+As a customer
+I need to touch in and out.
+# method touch_in creates an instance of oystercard
+# method touch_out checks that that same instance of oystercard touches out
+# method in_journey? is a boolean - is true if customer has not touched out, but has touched in
