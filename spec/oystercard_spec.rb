@@ -43,7 +43,7 @@ describe Oystercard do
 
   it "deducts the fare from the oystercard when it touches out" do
     subject.top_up(20)
-    expect{ subject.touch_out }.to change{ subject.balance }.by(-1)
+    expect{ subject.touch_out(station) }.to change{ subject.balance }.by(-1)
   end
 
   it "records entry station at touch_in" do 
@@ -54,7 +54,19 @@ describe Oystercard do
 
   it "forgets the entry station at touch_out" do 
     subject.top_up(20)
-    subject.touch_out
+    subject.touch_out(station)
     expect(subject.entry_station).to eq nil
   end
+
+  it "check for journey empty array" do
+    expect(subject.journey).to eq []
+  end
+
+  it "checks if journey is created" do
+    subject.top_up(20)
+    subject.touch_in(station)
+    subject.touch_out(station)
+    expect(subject.journey).to_not eq []
+  end
+
 end
