@@ -18,8 +18,7 @@ describe Oystercard do
 
   it "deducts fare from the oystercard balance" do
     subject.top_up(20)
-    expect{ subject.deduct 3}.to change{ subject.balance }.by -3
-    expect(subject).to respond_to(:deduct).with(1).argument
+    expect{ subject.send(:deduct, 3) }.to change{ subject.balance }.by -3
   end
 
   it "lets the customer in through the barriers" do
@@ -32,4 +31,17 @@ describe Oystercard do
   end
 
   it { is_expected.to respond_to 'in_journey?' }
+
+  it "checks MINIMUM_AMOUNT" do
+    expect(Oystercard::MINIMUM_AMOUNT).to eq 1
+  end
+
+  it "needs a MINIMUM_AMOUNT" do
+    expect{ subject.touch_in }.to raise_error "You don't have the minimum amount"
+  end
+
+  it "deducts the fare from the oystercard when it touches out" do
+    subject.top_up(20)
+    expect{ subject.touch_out }.to change{ subject.balance }.by(-1)
+  end
 end
